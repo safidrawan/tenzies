@@ -1,0 +1,31 @@
+main {
+  width: 400px;
+  height: 400px;
+  background-color: #eee;
+  color: #0e1f2c;
+  margin: 20px auto;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.dice-container{
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  gap: 20px;
+}
+.dice {
+  color: #0e1f2c;
+  background-color: white;
+  box-shadow: 0 2px 5px #ccc;
+  font-size: 2rem;
+  font-weight: 900;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  line-height: 1;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+}
