@@ -1,9 +1,7 @@
-export default function Dice(props){
+import { useState } from "react";
 
- 
+export default function Dice(props) {
 
-    return <div className="dice-container">
-        <button className="dice"></button>
- 
-    </div>
+
+  return <button className="dice">{props.num}</button>
 }

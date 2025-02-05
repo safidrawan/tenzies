@@ -6,12 +6,14 @@ main {
   margin: 20px auto;
   border-radius: 5px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
+  flex-direction: column;
 }
 .dice-container{
   display: grid;
   grid-template-columns: repeat(5,1fr);
+  grid-template-rows: repeat(2,1fr);
   gap: 20px;
 }
 .dice {
@@ -28,4 +30,24 @@ main {
   align-items: center;
   border: none;
   border-radius: 5px;
+}
+button{
+  cursor: pointer;
+}
+
+.roll{
+  background-color: #462FFC;
+  padding: 10px 25px;
+  border: none;
+  color: white;
+  font-size: 1.3rem;
+  border-radius: 5px;
+  font-weight: 700;
+}
+h1{
+  color: #397e28;
+}
+p{
+  padding: 10px;
+  text-align: center;
 }
