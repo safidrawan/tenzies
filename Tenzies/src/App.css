@@ -6,7 +6,7 @@ main {
   margin: 20px auto;
   border-radius: 5px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
   flex-direction: column;
 }
@@ -35,7 +35,7 @@ button{
   cursor: pointer;
 }
 
-.roll{
+.btn{
   background-color: #462FFC;
   padding: 10px 25px;
   border: none;
@@ -44,10 +44,22 @@ button{
   border-radius: 5px;
   font-weight: 700;
 }
-h1{
+.color-green{
   color: #397e28;
+}
+.freeze{
+  background-color: #66DC85;
+  color: white;
 }
 p{
   padding: 10px;
   text-align: center;
+}
+.buttons{
+  display: flex;
+  gap: 20px;
+}
+
+h1,h2,p{
+  margin: 0px;
 }
