@@ -9,6 +9,7 @@ main {
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
+  position: relative;
 }
 .dice-container{
   display: grid;
@@ -62,4 +63,21 @@ p{
 
 h1,h2,p{
   margin: 0px;
+}
+
+.btn-disabled{
+  opacity: 0.5;
+}
+
+.result{
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translateX(-50%) translateY(-50%);
+background-color: #ccc;
+color: #397e28;
+padding: 10px;
+border-radius: 10px;
+text-align: center;
+min-width: max-content;
 }
