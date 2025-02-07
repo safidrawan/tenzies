@@ -38,12 +38,13 @@ button{
 
 .btn{
   background-color: #462FFC;
-  padding: 10px 25px;
+  padding: 10px;
   border: none;
   color: white;
   font-size: 1.3rem;
   border-radius: 5px;
   font-weight: 700;
+  width: 100px;
 }
 .color-green{
   color: #397e28;

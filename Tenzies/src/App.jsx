@@ -1,14 +1,26 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import Result from "./components/Result";
 import Button from "./components/Button";
 import "./App.css";
 import Dice from "./components/Dice";
 
+
 export default function App() {
-  const [numbers, setNumbers] = useState(generateDices());
+  const [numbers, setNumbers] = useState(() => generateDices());
   const [count, setCount] = useState(0);
-  const [btnDisable, setBtnDisable] = useState(false);
+  const [gameWon, setGameWon] = useState(false);
+  const [timerKey,setTimerKey] = useState(0)
+
+
+  useEffect(()=>{
+    if (
+      numbers.every((die) => die.isHeld) &&
+      numbers.every((die) => die.value === numbers[0].value)
+    ) {
+      setGameWon(true);
+    }
+  },[numbers])
 
   function generateDices() {
     return new Array(10).fill(0).map(() => ({
@@ -17,34 +29,13 @@ export default function App() {
       id: nanoid(),
     }));
   }
-  function hold(id) {
+  const toggleHold = useCallback((id) => {
     setNumbers((prev) =>
       prev.map((obj) => (obj.id === id ? { ...obj, isHeld: !obj.isHeld } : obj))
     );
-  }
+  }, []);
 
-  useEffect(()=>{
-    const allHeld = numbers.every(die=> die.isHeld)
-    const firstValue = numbers[0].value;
-    const allSameValue = numbers.every(die=> die.value === firstValue)
-    if(allHeld && allSameValue) {
-      setBtnDisable(true)
-    }
-  },[numbers])
-
-  const dices = numbers.map((numObj) => {
-    return (
-      <Dice
-        btnDisable={btnDisable}
-        hold={() => hold(numObj.id)}
-        key={numObj.id}
-        id={numObj.id}
-        isHeld={numObj.isHeld}
-        value={numObj.value}
-      />
-    );
-  });
-  function rollDice() {
+  const rollDice = useCallback(() => {
     setNumbers((prev) =>
       prev.map((obj) => ({
         ...obj,
@@ -52,14 +43,25 @@ export default function App() {
       }))
     );
     setCount((prev) => prev + 1);
-  }
-  function reset() {
+  }, []);
+  const reset = () => {
     setNumbers(generateDices());
     setCount(0);
-    setBtnDisable(false);
-    setDone(0);
-    setFreezed(null);
-  }
+    setGameWon(false);
+    setTimerKey(prev=>prev+1)
+  };
+  const dices = numbers.map((numObj) => {
+    return (
+      <Dice
+        btnDisable={gameWon}
+        hold={() => toggleHold(numObj.id)}
+        key={numObj.id}
+        id={numObj.id}
+        isHeld={numObj.isHeld}
+        value={numObj.value}
+      />
+    );
+  });
 
   return (
     <main>
@@ -71,12 +73,12 @@ export default function App() {
       </p>
       <div className="dice-container">{dices}</div>;
       <div className="buttons">
-        <Button btnDisable={btnDisable} onClick={rollDice} text="Roll" />
+        <Button btnDisable={gameWon} onClick={rollDice} text="Roll" />
 
-        <Button btnDisable={btnDisable} onClick={reset} text="Reset" />
+        <Button btnDisable={gameWon} onClick={reset} text="Reset" />
       </div>
-      {btnDisable ? (
-        <Result count={count} btnDisable={btnDisable} onClick={reset} />
+      {gameWon ? (
+        <Result count={count} btnDisable={gameWon} onClick={reset} />
       ) : (
         ""
       )}
