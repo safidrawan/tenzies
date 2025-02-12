@@ -1,0 +1,58 @@
+.game-status {
+  padding: 20px;
+  background-color: forestgreen;
+  margin: 1rem 0;
+}
+.language-chips {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  padding: 1rem;
+  justify-content: center;
+}
+.language {
+  padding: 5px;
+  border-radius: 5px;
+}
+h1 {
+  margin-bottom: 15px;
+}
+.word span {
+  background-color: #393939;
+  padding: 10px;
+  margin: 2px;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #f9f4da;
+}
+section.keyboard {
+  /* background-color: #f9f4da; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 8px;
+
+}
+
+section.keyboard > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d5bf5a;
+  width: 30px;
+  height: 30px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #393939;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #d7d7d7;
+}
+button.newgame{
+    width: 200px;
+    margin: auto;
+    padding: 10px;
+    background-color: #62D2E9;
+    border-radius: 5px;
+    font-size: 1.2rem;
+}
