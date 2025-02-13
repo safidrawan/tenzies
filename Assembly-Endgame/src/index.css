@@ -6,6 +6,7 @@
   font-family: sans-serif;
   
 }
+
 body{
   background-color: #222;
   color: white;
@@ -17,6 +18,7 @@ body{
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
-  max-width: 350px;
+  min-width: 350px;
+  max-width: 500px;
   
 }
