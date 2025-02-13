@@ -5,9 +5,16 @@
 }
 .game-status {
   padding: 20px;
-  background-color: forestgreen;
   margin: 1rem 0;
   border-radius: var(--mid-radius);
+}
+.game-status.won{
+  background-color: forestgreen;
+
+}
+
+.game-status.lost{
+  background-color: red;
 }
 .language-chips {
   display: flex;
@@ -16,14 +23,28 @@
   padding: 1rem;
   justify-content: center;
 }
+
 .language {
   padding: 5px;
   border-radius: var(--mid-radius);
+  position: relative;
+}
+.language-chips .lost::before {
+  content: "💀";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.541);
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 h1 {
   margin-bottom: 15px;
 }
-.word{
+.word {
   display: flex;
   justify-content: center;
 }
