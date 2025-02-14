@@ -16,6 +16,10 @@
 .game-status.lost{
   background-color: red;
 }
+.game-status.farewell{
+  background-color: #008ddf;
+
+}
 .language-chips {
   display: flex;
   gap: 5px;

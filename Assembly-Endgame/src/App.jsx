@@ -23,12 +23,17 @@ export default function App() {
 
   const isGameOver = isGameWon || isGameLost;
 
+  const lastGuessedLetter = [...userGuesses][userGuesses.size-1];
+  const isLastGuessWrong =
+    lastGuessedLetter && !currentWord.includes(lastGuessedLetter);
+
   const alphabet = "abcdefghijklmnopqrstuvwxyz.";
 
   function getRandomNum() {
     return languages[
       Math.floor(Math.random() * languages.length)
     ].name.toLowerCase();
+    auto;
   }
 
   function updateUserGuesses(letter) {
@@ -78,7 +83,7 @@ export default function App() {
     );
   });
 
-  const wordElement = currentWord.split("").map((letter,index) => (
+  const wordElement = currentWord.split("").map((letter, index) => (
     <span className="word-letters" key={index}>
       {[...userGuesses].includes(letter) ? letter.toUpperCase() : ""}
     </span>
@@ -87,9 +92,14 @@ export default function App() {
   function getMessage() {
     if (isGameWon) return { title: "You Won!", message: "Well Done! 🎉" };
     if (isGameLost) return { title: "You Lost!", message: "Try again!" };
+    if (isLastGuessWrong)
+      return {
+        title: "Oh no!",
+        message: getFarewellText(languages[wrongGuessesCount - 1].name),
+      };
     return { title: "Game", message: "in progress" };
   }
-  const {title,message} = getMessage();
+  const { title, message } = getMessage();
 
   return (
     <main>
