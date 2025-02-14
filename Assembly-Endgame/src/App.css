@@ -94,7 +94,7 @@ section.keyboard > button.wrong {
 }
 button.newgame {
   width: 200px;
-  margin: auto;
+  margin-top: 20px;
   padding: 10px;
   background-color: #62d2e9;
   border-radius: var(--mid-radius);

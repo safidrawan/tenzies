@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 
 import "./App.css";
 import { languages } from "./languages";
+import { getFarewellText } from "./Farewell";
 
 export default function App() {
   const [currentWord, setCurrentWord] = useState(getRandomNum);
@@ -41,7 +42,7 @@ export default function App() {
       ].name.toLowerCase();
     });
   }
-  function handleKeyboardClick() {
+  function handleKeyboardClick(letter) {
     updateUserGuesses(letter);
   }
   const languageElements = languages.map((obj, index) => {
