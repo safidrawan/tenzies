@@ -1,37 +1,48 @@
 import { useState } from "react";
 import { clsx } from "clsx";
+
 import "./App.css";
 import { languages } from "./languages";
-export default function App() {
-  const [currentWord, setCurrentWord] = useState(
-    languages[Math.floor(Math.random() * languages.length)].name.toLowerCase()
-  );
-  const [userGuesses, setUserGuesses] = useState([]);
 
-  const wrongGuessesCount = userGuesses.filter(
+export default function App() {
+  const [currentWord, setCurrentWord] = useState(getRandomNum);
+  const [userGuesses, setUserGuesses] = useState(new Set());
+
+  const wrongGuessesCount = [...userGuesses].filter(
     (letter) => !currentWord.includes(letter)
   ).length;
 
   const isGameWon = currentWord
     .split("")
-    .every((letter) => userGuesses.includes(letter));
+    .every((letter) => [...userGuesses].includes(letter));
 
-  const isGameLost = wrongGuessesCount >= languages.length - 1;
+  const MAX_WRONG_GUESSES = languages.length - 1;
+
+  const isGameLost = wrongGuessesCount >= MAX_WRONG_GUESSES;
 
   const isGameOver = isGameWon || isGameLost;
 
   const alphabet = "abcdefghijklmnopqrstuvwxyz.";
 
+  function getRandomNum() {
+    return languages[
+      Math.floor(Math.random() * languages.length)
+    ].name.toLowerCase();
+  }
+
   function updateUserGuesses(letter) {
-    setUserGuesses((prev) => [...prev, letter]);
+    setUserGuesses((prev) => new Set([...prev, letter]));
   }
   function newGame() {
-    setUserGuesses([]);
+    setUserGuesses(new Set());
     setCurrentWord(() => {
       return languages[
         Math.floor(Math.random() * languages.length)
       ].name.toLowerCase();
     });
+  }
+  function handleKeyboardClick() {
+    updateUserGuesses(letter);
   }
   const languageElements = languages.map((obj, index) => {
     const isLangLost = index < wrongGuessesCount;
@@ -47,7 +58,7 @@ export default function App() {
   });
 
   const keyboard = alphabet.split("").map((letter, index) => {
-    const isGuessed = userGuesses.includes(letter);
+    const isGuessed = [...userGuesses].includes(letter);
     const isCorrect = currentWord.includes(letter) && isGuessed;
     const isWrong = isGuessed && !isCorrect;
     const className = clsx({
@@ -58,7 +69,7 @@ export default function App() {
     return (
       <button
         className={className}
-        onClick={() => updateUserGuesses(letter)}
+        onClick={() => handleKeyboardClick(letter)}
         key={index}
       >
         {letter.toUpperCase()}
@@ -66,14 +77,21 @@ export default function App() {
     );
   });
 
-  const wordElement = currentWord.split("").map((letter) => (
-    <span className="word-letters" key={letter}>
-      {userGuesses.includes(letter) ? letter.toUpperCase() : ""}
+  const wordElement = currentWord.split("").map((letter,index) => (
+    <span className="word-letters" key={index}>
+      {[...userGuesses].includes(letter) ? letter.toUpperCase() : ""}
     </span>
   ));
 
+  function getMessage() {
+    if (isGameWon) return { title: "You Won!", message: "Well Done! 🎉" };
+    if (isGameLost) return { title: "You Lost!", message: "Try again!" };
+    return { title: "Game", message: "in progress" };
+  }
+  const {title,message} = getMessage();
+
   return (
-    <>
+    <main>
       <header>
         <h1>Assembly: Endgame</h1>
         <p>
@@ -82,29 +100,10 @@ export default function App() {
         </p>
       </header>
       <section
-        className={`game-status ${
-          isGameWon ? "won" : isGameLost ? "lost" : ""
-        }`}
+        className={clsx("game-status", { won: isGameWon, lost: isGameLost })}
       >
-        {isGameWon ? (
-          <>
-            {" "}
-            <h2>You Win! </h2>
-            <p>Well Done! 🎉</p>
-          </>
-        ) : isGameLost ? (
-          <>
-            {" "}
-            <h2>You Lose! </h2>
-            <p>Try again!</p>
-          </>
-        ) : (
-          <>
-            {" "}
-            <h2>Game</h2>
-            <p>in progress</p>
-          </>
-        )}
+        <h2>{title}</h2>
+        <p>{message}</p>
       </section>
       <section className="language-chips">{languageElements}</section>
       <section className="word">{wordElement}</section>
@@ -116,6 +115,6 @@ export default function App() {
       ) : (
         ""
       )}
-    </>
+    </main>
   );
 }
